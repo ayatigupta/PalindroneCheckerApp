@@ -1,35 +1,57 @@
+import java.util.Stack;
+
+/*
+ * =========================================================
+ * MAIN CLASS - UseCase5PalindromeCheckerApp
+ * =========================================================
+ * Use Case 5: Stack Based Palindrome Checker
+ *
+ * Description:
+ * This class validates a palindrome using a Stack
+ * data structure which follows the LIFO principle.
+ *
+ * At this stage, the application:
+ * - Pushes characters into a stack
+ * - Pops them in reverse order
+ * - Compares with original sequence
+ * - Displays the result
+ *
+ * Author: Developer
+ * Version: 5.0
+ */
+
 public class PalindroneCheckerApp {
 
+    /*
+     * Application entry point for UC5
+     * @param args command-line arguments
+     */
     public static void main(String[] args) {
 
-        // Original String
-        String word = "radar";
+        // Declare and initialize the input string
+        String input = "noon";
 
-        // Convert String to Character Array
-        char[] characters = word.toCharArray();
+        // Create a Stack to store characters
+        Stack<Character> stack = new Stack<>();
 
-        // Two-pointer approach
-        int start = 0;
-        int end = characters.length - 1;
+        // Push each character of the string into the stack
+        for (char c : input.toCharArray()) {
+            stack.push(c);
+        }
 
+        // Assume palindrome initially
         boolean isPalindrome = true;
 
-        while (start < end) {
-
-            if (characters[start] != characters[end]) {
+        // Iterate again through original string
+        for (char c : input.toCharArray()) {
+            if (c != stack.pop()) {
                 isPalindrome = false;
                 break;
             }
-
-            start++;
-            end--;
         }
 
-        // Display Result
-        if (isPalindrome) {
-            System.out.println("The given string \"" + word + "\" is a Palindrome.");
-        } else {
-            System.out.println("The given string \"" + word + "\" is NOT a Palindrome.");
-        }
+        // Print results
+        System.out.println("Input : " + input);
+        System.out.println("Is Palindrome? : " + isPalindrome);
     }
 }
