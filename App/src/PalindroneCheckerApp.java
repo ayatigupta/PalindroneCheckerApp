@@ -1,93 +1,42 @@
-/*
- * =========================================================
- * MAIN CLASS - UseCase8PalindromeCheckerApp
- * =========================================================
- * Use Case 8: Linked List Based Palindrome Checker
- *
- * Description:
- * This class validates a palindrome using a
- * Singly Linked List.
- *
- * Steps:
- * 1. Convert string into linked list
- * 2. Use fast & slow pointer to find middle
- * 3. Reverse second half in-place
- * 4. Compare both halves
- *
- * Author: Developer
- * Version: 8.0
- */
-
 public class PalindroneCheckerApp {
 
-    // Node class for singly linked list
-    static class Node {
-        char data;
-        Node next;
-
-        Node(char data) {
-            this.data = data;
-            this.next = null;
-        }
-    }
-
+    /**
+     * Application entry point for UC9.
+     * @param args Command-line arguments
+     */
     public static void main(String[] args) {
 
-        String input = "level";
+        String input = "madam"; // you can change input here
 
-        // Step 1: Convert string to linked list
-        Node head = null;
-        Node tail = null;
+        boolean result = check(input, 0, input.length() - 1);
 
-        for (char c : input.toCharArray()) {
-            Node newNode = new Node(c);
-            if (head == null) {
-                head = newNode;
-                tail = newNode;
-            } else {
-                tail.next = newNode;
-                tail = newNode;
-            }
+        if (result) {
+            System.out.println(input + " is a Palindrome");
+        } else {
+            System.out.println(input + " is NOT a Palindrome");
+        }
+    }
+git
+    /**
+     * Recursively checks whether a string is palindrome.
+     * @param s Input string
+     * @param start Starting index
+     * @param end Ending index
+     * @return true if palindrome, otherwise false
+     */
+    private static boolean check(String s, int start, int end) {
+
+        // Base case: if pointers cross, it's a palindrome
+        if (start >= end) {
+            return true;
         }
 
-        // Step 2: Find middle using fast & slow pointers
-        Node slow = head;
-        Node fast = head;
-
-        while (fast != null && fast.next != null) {
-            slow = slow.next;
-            fast = fast.next.next;
+        // If characters don't match → not palindrome
+        if (s.charAt(start) != s.charAt(end)) {
+            return false;
         }
 
-        // Step 3: Reverse second half
-        Node prev = null;
-        Node current = slow;
-        Node nextNode;
-
-        while (current != null) {
-            nextNode = current.next;
-            current.next = prev;
-            prev = current;
-            current = nextNode;
-        }
-
-        // Step 4: Compare first half and reversed second half
-        Node firstHalf = head;
-        Node secondHalf = prev;
-
-        boolean isPalindrome = true;
-
-        while (secondHalf != null) {
-            if (firstHalf.data != secondHalf.data) {
-                isPalindrome = false;
-                break;
-            }
-            firstHalf = firstHalf.next;
-            secondHalf = secondHalf.next;
-        }
-
-        // Display result
-        System.out.println("Input : " + input);
-        System.out.println("Is Palindrome? : " + isPalindrome);
+        // Recursive call (move inward)
+        return check(s, start + 1, end - 1);
     }
 }
